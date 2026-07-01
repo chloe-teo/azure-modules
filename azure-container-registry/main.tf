@@ -11,4 +11,6 @@ resource "azurerm_container_registry" "acr" {
   location            = module.resource_group.location
   sku                 = "Standard"
   admin_enabled       = false
+
+  depends_on = [module.resource_group]
 }

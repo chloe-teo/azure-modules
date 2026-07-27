@@ -12,7 +12,6 @@ resource "azurerm_virtual_network" "aks-vnet" {
   address_space       = var.azure_virtual_network_address_space
   tags                = var.tags
 
-  depends_on = [module.resource_group]
 }
 
 resource "azurerm_subnet" "this" {
@@ -25,7 +24,6 @@ resource "azurerm_subnet" "this" {
   virtual_network_name = azurerm_virtual_network.aks-vnet.name
   address_prefixes     = each.value.address_prefixes
 
-  depends_on = [module.resource_group]
 }
 
 resource "azurerm_network_security_group" "this" {
@@ -37,8 +35,6 @@ resource "azurerm_network_security_group" "this" {
   location            = module.resource_group.location
   resource_group_name = module.resource_group.name
   tags                = var.tags
-  
-  depends_on = [module.resource_group]
 }
 
 resource "azurerm_subnet_network_security_group_association" "this" {

@@ -12,6 +12,4 @@ resource "azurerm_container_registry" "acr" {
   sku                 = "Standard"
   admin_enabled       = false
   tags                = var.tags
-
-  depends_on = [module.resource_group]
 }

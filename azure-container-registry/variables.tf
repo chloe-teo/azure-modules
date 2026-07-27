@@ -12,5 +12,9 @@ variable "resource_group_name"{
 variable "location" {
   description = "The location of the resource group"
   type        = string
-  default     = "West Europe"
+}
+
+variable "tags" {
+  description = "A map of tags to assign to the resource"
+  type        = map(string)
 }

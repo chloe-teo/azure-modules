@@ -6,6 +6,7 @@ variable "cluster_name" {
 variable "dns_prefix" {
   description = "DNS prefix for the AKS cluster"
   type        = string
+  default     = "aksdnsprefix"
 }
 
 variable "resource_group_name" {
@@ -63,19 +64,16 @@ variable "tags" {
 variable "vnet_id" {
   description = "The ID of the virtual network to attach to the AKS cluster"
   type        = string
-  default     = null
 }
 
 variable "system_subnet_id" {
   description = "The ID of the subnet to use for the AKS node pools - system"
   type        = string
-  default     = null
 }
 
 variable "apps_subnet_id" {
   description = "The ID of the subnet to use for the AKS node pools - applications"
   type        = string
-  default     = null
 }
 
 variable "service_cidr" {
@@ -93,7 +91,6 @@ variable "dns_service_ip" {
 variable kubernetes_version {
   description = "The version of Kubernetes to use for the AKS cluster"
   type        = string
-  default     = null
 }
 
 variable "admin_group_object_ids" {

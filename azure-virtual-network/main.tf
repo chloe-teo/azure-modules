@@ -6,11 +6,11 @@ module "resource_group" {
 }
 
 resource "azurerm_virtual_network" "aks-vnet" {
-  name                = variable.azure_virtual_network_name
+  name                = var.azure_virtual_network_name
   location            = module.resource_group.location
   resource_group_name = module.resource_group.name
-  address_space       = variable.azure_virtual_network_address_space
-  tags                = vars.tags
+  address_space       = var.azure_virtual_network_address_space
+  tags                = var.tags
 }
 
 resource "azurerm_subnet" "this" {

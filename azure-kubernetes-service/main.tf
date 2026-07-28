@@ -50,7 +50,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "application" {
   vm_size               = var.application_node_pool_vm_size
   node_count            = var.application_node_pool_node_count
   mode                  = "User"
-  pod_subnet_id         = var.apps_subnet_id
+  vnet_subnet_id        = var.apps_subnet_id
 
   depends_on = [azurerm_kubernetes_cluster.this]
 }

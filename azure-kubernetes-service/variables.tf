@@ -79,13 +79,13 @@ variable "apps_subnet_id" {
 variable "service_cidr" {
   description = "The CIDR block for the Kubernetes service network"
   type        = string
-  default     = "10.0.0.0/16"
+  default     = "172.20.0.0/16"
 }
 
 variable "dns_service_ip" {
   description = "The IP address within the Kubernetes service CIDR to use for the DNS service"
   type        = string
-  default     = "10.0.0.10"
+  default     = "172.20.0.10"
 }
 
 variable kubernetes_version {

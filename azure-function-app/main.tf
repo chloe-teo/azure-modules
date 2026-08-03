@@ -29,7 +29,7 @@ resource "azurerm_function_app_flex_consumption" "flex_app" {
   name                = var.azure_function_app_name
   resource_group_name = module.resource_group
   location            = module.resource_group.location
-  service_plan_id     = azurerm_service_plan.my_function_app_service_plan.id
+  service_plan_id     = module.service_plan.id
 
   storage_container_type      = var.storage_container_type
   storage_container_endpoint  = "${module.storage_account.storage_accounts.this[0].primary_blob_endpoint}${module.storage_account.azurerm_storage_container.this[0].name}"

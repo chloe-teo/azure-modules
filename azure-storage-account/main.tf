@@ -2,7 +2,7 @@ locals {
     storage_account_containers = merge([
         for storage_account in var.storage_accounts : {
             for container in storage_account.containers :
-            storage_account.name + "_" + container.name => merge(container, {
+            "${storage_account.name}_${container.name}" => merge(container, {
                 storage_account_name = storage_account.name
             })
         }

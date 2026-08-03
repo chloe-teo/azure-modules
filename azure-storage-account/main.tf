@@ -24,6 +24,7 @@ resource "azurerm_storage_account" "this" {
   name                     = each.value.name
   resource_group_name      = module.resource_group.name
   location                 = module.resource_group.location
+  access_tier              = each.value.access_tier
   account_tier             = each.value.account_tier
   account_replication_type = each.value.account_replication_type
   tags                     = var.tags

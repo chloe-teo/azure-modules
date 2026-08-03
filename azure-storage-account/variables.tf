@@ -14,6 +14,7 @@ variable "storage_accounts"{
         name                     = string
         account_kind                     = string
         account_replication_type         = string
+        access_tier                       = string
         containers               = map(object({
             name                  = string
             access_type           = string

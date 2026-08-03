@@ -1,3 +1,8 @@
+variable "application_insights_key" {
+  description = "The Application Insights key for the Azure Function App"
+  type        = string
+}
+
 variable "azure_function_app_name" {
   description = "The name of the Azure Function App"
   type        = string
@@ -57,19 +62,42 @@ variable "runtime_version" {
   type        = string
 }
 
-variable "storage_accounts" {
-  description = "A map of storage accounts to create"
+variable "storage_account_name" {
+  description = "The name of the storage account"
+  type        = string
+}
+
+variable "storage_account_kind" {
+  description = "The kind of storage account"
+  type        = string
+  default     = "StorageV2"
+}
+
+variable "storage_account_tier" {
+  description = "The storage account tier"
+  type        = string
+  default     = "Standard"
+}
+
+variable "storage_account_replication_type" {
+  description = "The replication type of the storage account"
+  type        = string
+  default     = "LRS"
+}
+
+variable "storage_account_access_tier" {
+  description = "The access tier of the storage account"
+  type        = string
+  default     = "Hot"
+}
+
+variable "containers" {
+  description = "A map of containers to create in the storage account"
   type = map(object({
-    name                     = string
-    account_kind             = string
-    account_replication_type = string
-    account_tier             = string
-    access_tier              = string
-    containers = map(object({
-      name        = string
-      access_type = string
-    }))
+    name        = string
+    access_type = string
   }))
+  default = {}
 }
 
 variable "storage_container_type" {

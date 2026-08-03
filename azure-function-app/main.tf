@@ -1,5 +1,4 @@
 locals {
-  func_storage_account = one(values(module.storage_account.storage_accounts))
   func_storage_container = one(values(module.storage_account.storage_containers))
 }
 
@@ -24,10 +23,15 @@ module "service_plan" {
 module "storage_account" {
   source = "../azure-storage-account"
 
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  storage_accounts    = var.storage_accounts
-  tags                = var.tags
+  resource_group_name      = var.resource_group_name
+  location                 = var.location
+  storage_account_name     = var.storage_account_name
+  account_kind             = var.storage_account_kind
+  account_tier             = var.storage_account_tier
+  account_replication_type = var.storage_account_replication_type
+  access_tier              = var.storage_account_access_tier
+  containers               = var.containers
+  tags                     = var.tags
 }
 
 resource "azurerm_function_app_flex_consumption" "flex_app" {
@@ -37,14 +41,16 @@ resource "azurerm_function_app_flex_consumption" "flex_app" {
   service_plan_id     = module.service_plan.id
 
   storage_container_type      = var.storage_container_type
-  storage_container_endpoint  = "${local.func_storage_account.primary_blob_endpoint}${local.func_storage_container.name}"
+  storage_container_endpoint  = "${module.storage_account.primary_blob_endpoint}${local.func_storage_container.name}"
   storage_authentication_type = var.storage_auth_type
   runtime_name                = var.runtime_name
   runtime_version             = var.runtime_version
   maximum_instance_count      = var.maximum_instance_count
   instance_memory_in_mb       = var.instance_memory_in_mb
 
-  site_config {}
+  site_config {
+    application_insights_key = var.application_insights_key
+  }
 
   identity {
     type = var.identity_type

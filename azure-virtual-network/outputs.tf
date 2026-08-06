@@ -6,6 +6,6 @@ output "id" {
 output "subnet_ids" {
   description = "Map of subnet names to subnet IDs"
   value = {
-    for subnet in azurerm_subnet.this : subnet.name => subnet.id
+    for subnet_name, subnet in azurerm_subnet.this : subnet_name => subnet.id
   }
 }

@@ -21,7 +21,7 @@ resource "azurerm_subnet" "this" {
 
   name                 = each.value.name
   resource_group_name  = module.resource_group.name
-  virtual_network_name = azurerm_virtual_network.aks-vnet.name
+  virtual_network_name = azurerm_virtual_network.this.name
   address_prefixes     = each.value.address_prefixes
 
 }

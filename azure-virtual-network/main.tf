@@ -5,7 +5,7 @@ module "resource_group" {
   location            = var.location
 }
 
-resource "azurerm_virtual_network" "aks-vnet" {
+resource "azurerm_virtual_network" "this" {
   name                = var.azure_virtual_network_name
   location            = module.resource_group.location
   resource_group_name = module.resource_group.name

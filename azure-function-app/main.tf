@@ -48,6 +48,7 @@ resource "azurerm_function_app_flex_consumption" "flex_app" {
   maximum_instance_count        = var.maximum_instance_count
   instance_memory_in_mb         = var.instance_memory_in_mb
   public_network_access_enabled = var.public_network_access_enabled
+  virtual_network_subnet_id     = var.virtual_network_subnet_id
 
   site_config {
     application_insights_key = var.application_insights_key
@@ -71,6 +72,7 @@ resource "azurerm_function_app_flex_consumption" "flex_app" {
 
   depends_on = [
     module.service_plan,
-    module.storage_account
+    module.storage_account,
+    azurerm_private_endpoint.storage_blob
   ]
 }

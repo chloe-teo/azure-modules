@@ -1,6 +1,10 @@
 variable "cluster_name" {
   description = "The name of the AKS cluster"
   type        = string
+  validation {
+    condition     = trimspace(var.cluster_name) != ""
+    error_message = "cluster_name must not be empty."
+  }
 }
 
 variable "dns_prefix" {
@@ -29,6 +33,10 @@ variable "system_node_pool_node_count" {
   description = "Node count for the system node pool"
   type        = number
   default     = 1
+  validation {
+    condition     = var.system_node_pool_node_count > 0
+    error_message = "system_node_pool_node_count must be greater than zero."
+  }
 }
 
 variable "system_node_pool_vm_size" {
@@ -47,6 +55,10 @@ variable "application_node_pool_node_count" {
   description = "Node count for the application node pool"
   type        = number
   default     = 1
+  validation {
+    condition     = var.application_node_pool_node_count > 0
+    error_message = "application_node_pool_node_count must be greater than zero."
+  }
 }
 
 variable "application_node_pool_vm_size" {
@@ -88,7 +100,7 @@ variable "dns_service_ip" {
   default     = "172.20.0.10"
 }
 
-variable kubernetes_version {
+variable "kubernetes_version" {
   description = "The version of Kubernetes to use for the AKS cluster"
   type        = string
 }

@@ -13,10 +13,10 @@ resource "azurerm_kubernetes_cluster" "this" {
   kubernetes_version  = var.kubernetes_version
 
   default_node_pool {
-    name           = var.system_node_pool_name
-    node_count     = var.system_node_pool_node_count
-    vm_size        = var.system_node_pool_vm_size
-    vnet_subnet_id = var.system_subnet_id
+    name                         = var.system_node_pool_name
+    node_count                   = var.system_node_pool_node_count
+    vm_size                      = var.system_node_pool_vm_size
+    vnet_subnet_id               = var.system_subnet_id
     only_critical_addons_enabled = true
   }
 
@@ -25,13 +25,13 @@ resource "azurerm_kubernetes_cluster" "this" {
   }
 
   network_profile {
-    network_plugin    = "azure"
-    network_policy    = "cilium"
-    network_data_plane = "cilium"
+    network_plugin      = "azure"
+    network_policy      = "cilium"
+    network_data_plane  = "cilium"
     network_plugin_mode = "overlay"
-    load_balancer_sku = "standard"
-    service_cidr      = var.service_cidr
-    dns_service_ip    = var.dns_service_ip
+    load_balancer_sku   = "standard"
+    service_cidr        = var.service_cidr
+    dns_service_ip      = var.dns_service_ip
   }
 
   # azure_active_directory_role_based_access_control{

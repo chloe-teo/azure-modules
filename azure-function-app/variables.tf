@@ -6,6 +6,10 @@ variable "application_insights_key" {
 variable "azure_function_app_name" {
   description = "The name of the Azure Function App"
   type        = string
+  validation {
+    condition     = trimspace(var.azure_function_app_name) != ""
+    error_message = "azure_function_app_name must not be empty."
+  }
 }
 
 variable "azure_service_plan_name" {
@@ -43,12 +47,20 @@ variable "maximum_instance_count" {
   description = "The maximum number of instances for the Azure Function App"
   type        = number
   default     = 3
+  validation {
+    condition     = var.maximum_instance_count >= 1 && var.maximum_instance_count <= 1000
+    error_message = "maximum_instance_count must be between 1 and 1000."
+  }
 }
 
 variable "instance_memory_in_mb" {
   description = "The amount of memory in MB for each instance of the Azure Function App"
   type        = number
   default     = 512
+  validation {
+    condition     = var.instance_memory_in_mb > 0
+    error_message = "instance_memory_in_mb must be greater than zero."
+  }
 }
 
 variable "runtime_name" {
@@ -104,12 +116,20 @@ variable "storage_container_type" {
   description = "The type of storage container to use for the Azure Function App"
   type        = string
   default     = "blobContainer"
+  validation {
+    condition     = var.storage_container_type == "blobContainer"
+    error_message = "storage_container_type must be blobContainer."
+  }
 }
 
 variable "storage_auth_type" {
   description = "The type of storage authentication to use for the Azure Function App"
   type        = string
   default     = "SystemAssignedIdentity"
+  validation {
+    condition     = contains(["SystemAssignedIdentity", "UserAssignedIdentity", "StorageAccountConnectionString"], var.storage_auth_type)
+    error_message = "storage_auth_type must be a supported Azure Functions storage authentication type."
+  }
 }
 
 variable "tags" {
@@ -121,6 +141,24 @@ variable "public_network_access_enabled" {
   description = "Should public network access be enabled for the Azure Function App"
   type        = bool
   default     = true
+}
+
+variable "virtual_network_subnet_id" {
+  description = "The delegated subnet ID used for Function App VNet integration"
+  type        = string
+  default     = null
+}
+
+variable "storage_private_endpoint_subnet_id" {
+  description = "The subnet ID for the linked storage account private endpoint"
+  type        = string
+  default     = null
+}
+
+variable "storage_private_dns_zone_ids" {
+  description = "Private DNS zone IDs associated with the storage private endpoint"
+  type        = list(string)
+  default     = []
 }
 
 variable "ip_restrictions" {

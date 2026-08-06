@@ -40,16 +40,27 @@ resource "azurerm_function_app_flex_consumption" "flex_app" {
   location            = module.resource_group.location
   service_plan_id     = module.service_plan.id
 
-  storage_container_type      = var.storage_container_type
-  storage_container_endpoint  = "${module.storage_account.primary_blob_endpoint}${local.func_storage_container.name}"
-  storage_authentication_type = var.storage_auth_type
-  runtime_name                = var.runtime_name
-  runtime_version             = var.runtime_version
-  maximum_instance_count      = var.maximum_instance_count
-  instance_memory_in_mb       = var.instance_memory_in_mb
+  storage_container_type        = var.storage_container_type
+  storage_container_endpoint    = "${module.storage_account.primary_blob_endpoint}${local.func_storage_container.name}"
+  storage_authentication_type   = var.storage_auth_type
+  runtime_name                  = var.runtime_name
+  runtime_version               = var.runtime_version
+  maximum_instance_count        = var.maximum_instance_count
+  instance_memory_in_mb         = var.instance_memory_in_mb
+  public_network_access_enabled = var.public_network_access_enabled
 
   site_config {
     application_insights_key = var.application_insights_key
+
+    dynamic "ip_restriction" {
+      for_each = var.ip_restrictions
+      content {
+        name       = ip_restriction.value.name
+        action     = ip_restriction.value.action
+        ip_address = ip_restriction.value.ip_address
+        priority   = ip_restriction.value.priority
+      }
+    }
   }
 
   identity {

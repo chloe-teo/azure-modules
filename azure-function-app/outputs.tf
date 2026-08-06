@@ -8,7 +8,7 @@ output "storage_account_id" {
   value       = module.storage_account.storage_account_id
 }
 
-output "identity_principal_id"{
-    description = "The identity of the azure function app"
-    value       = azurerm_function_app_flex_consumption.flex_app.identity[0].principal_id
+output "identity_principal_id" {
+  description = "The identity of the azure function app"
+  value       = azurerm_function_app_flex_consumption.flex_app.identity[0].principal_id
 }

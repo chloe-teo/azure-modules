@@ -116,3 +116,20 @@ variable "tags" {
   description = "A map of tags to assign to the resource"
   type        = map(string)
 }
+
+variable "public_network_access_enabled" {
+  description = "Should public network access be enabled for the Azure Function App"
+  type        = bool
+  default     = true
+}
+
+variable "ip_restrictions" {
+  description = "A list of IP restriction rules for the Azure Function App"
+  type = list(object({
+    name       = string
+    action     = string
+    ip_address = string
+    priority   = number
+  }))
+  default = []
+}

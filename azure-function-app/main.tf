@@ -72,7 +72,6 @@ resource "azurerm_function_app_flex_consumption" "flex_app" {
 
   depends_on = [
     module.service_plan,
-    module.storage_account,
-    azurerm_private_endpoint.storage_blob
+    module.storage_account
   ]
 }

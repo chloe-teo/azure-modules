@@ -26,6 +26,12 @@ module-name/
 └── providers.tf     # Required providers (if module-level config needed)
 ```
 
+## AI-Assisted Development
+
+![img1](assets/AI-assisted-workflow.png)
+
+The repository includes [`.github/copilot-instructions.md`](../.github/copilot-instructions.md) to provide AI coding assistants with local Terraform conventions and workflow requirements. These instructions ground suggestions in the repository's provider versions, module structure, validation steps, and security practices, helping make local AI-assisted development more reliable and reducing unsupported assumptions or hallucinated configuration.
+
 ## Usage
 
 ### Terraform
@@ -78,10 +84,6 @@ inputs = {
   node_count         = 2
 }
 ```
-
-## AI-Assisted Development
-
-The repository includes [`.github/copilot-instructions.md`](../.github/copilot-instructions.md) to provide AI coding assistants with local Terraform conventions and workflow requirements. These instructions ground suggestions in the repository's provider versions, module structure, validation steps, and security practices, helping make local AI-assisted development more reliable and reducing unsupported assumptions or hallucinated configuration.
 
 ## Best Practices
 

@@ -58,6 +58,27 @@ variable "containers" {
   default = {}
 }
 
+variable "public_network_access_enabled" {
+  description = "Whether public network access is enabled for the storage account"
+  type        = bool
+  default     = false
+}
+
+variable "network_rules" {
+  description = "Optional firewall rules for allowing selected public networks"
+  type = object({
+    default_action             = optional(string, "Allow")
+    bypass                     = optional(list(string), ["AzureServices"])
+    ip_rules                   = optional(list(string), [])
+    virtual_network_subnet_ids = optional(list(string), [])
+  })
+  default = null
+  validation {
+    condition     = var.network_rules == null || contains(["Allow", "Deny"], var.network_rules.default_action)
+    error_message = "network_rules.default_action must be Allow or Deny."
+  }
+}
+
 variable "tags" {
   description = "A map of tags to assign to the resource"
   type        = map(string)

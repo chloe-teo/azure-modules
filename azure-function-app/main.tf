@@ -52,6 +52,8 @@ resource "azurerm_function_app_flex_consumption" "flex_app" {
 
   site_config {
     application_insights_key = var.application_insights_key
+    ip_restriction_default_action = var.ip_restriction_default_action
+    scm_ip_restriction_default_action = var.scm_ip_restriction_default_action
 
     dynamic "ip_restriction" {
       for_each = var.ip_restrictions
@@ -70,6 +72,10 @@ resource "azurerm_function_app_flex_consumption" "flex_app" {
   }
 
   tags = var.tags
+
+  lifecycle {
+    ignore_changes = [app_settings]
+  }
 
   depends_on = [
     module.service_plan,

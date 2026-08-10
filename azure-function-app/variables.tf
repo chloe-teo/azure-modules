@@ -172,3 +172,23 @@ variable "ip_restrictions" {
   }))
   default = []
 }
+
+variable "ip_restriction_default_action" {
+  description = "The default action for IP restrictions"
+  type        = string
+  default     = "Deny"
+  validation {
+    condition     = contains(["Allow", "Deny"], var.ip_restriction_default_action)
+    error_message = "ip_restriction_default_action must be either 'Allow' or 'Deny'."
+  }
+}
+
+variable "scm_ip_restriction_default_action" {
+  description = "The default action for SCM IP restrictions"
+  type        = string
+  default     = "Deny"
+  validation {
+    condition     = contains(["Allow", "Deny"], var.scm_ip_restriction_default_action)
+    error_message = "scm_ip_restriction_default_action must be either 'Allow' or 'Deny'."
+  }
+}

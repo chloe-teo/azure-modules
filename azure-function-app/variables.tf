@@ -3,6 +3,11 @@ variable "application_insights_key" {
   type        = string
 }
 
+variable "application_insights_connection_string" {
+  description = "The Application Insights connection string for the Azure Function App"
+  type        = string
+}
+
 variable "azure_function_app_name" {
   description = "The name of the Azure Function App"
   type        = string

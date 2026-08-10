@@ -52,6 +52,7 @@ resource "azurerm_function_app_flex_consumption" "flex_app" {
 
   site_config {
     application_insights_key = var.application_insights_key
+    application_insights_connection_string = var.application_insights_connection_string
     ip_restriction_default_action = var.ip_restriction_default_action
     scm_ip_restriction_default_action = var.scm_ip_restriction_default_action
 

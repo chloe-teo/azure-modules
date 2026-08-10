@@ -12,5 +12,5 @@ resource "azurerm_service_plan" "this" {
 
   sku_name = var.sku_name
   os_type  = var.os_type
-  tags = var.tags
+  tags     = var.tags
 }

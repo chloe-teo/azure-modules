@@ -164,10 +164,11 @@ variable "storage_private_dns_zone_ids" {
 variable "ip_restrictions" {
   description = "A list of IP restriction rules for the Azure Function App"
   type = list(object({
-    name       = string
-    action     = string
-    ip_address = string
-    priority   = number
+    name                      = string
+    action                    = string
+    ip_address                = optional(string)
+    virtual_network_subnet_id = optional(string)
+    priority                  = number
   }))
   default = []
 }

@@ -1,19 +1,19 @@
-variable "azure_service_plan_name"{
-    description = "The name of the Azure Service Plan"
-    type = string
-    validation {
-      condition     = trimspace(var.azure_service_plan_name) != ""
-      error_message = "azure_service_plan_name must not be empty."
-    }
+variable "azure_service_plan_name" {
+  description = "The name of the Azure Service Plan"
+  type        = string
+  validation {
+    condition     = trimspace(var.azure_service_plan_name) != ""
+    error_message = "azure_service_plan_name must not be empty."
+  }
 }
 
-variable "resource_group_name"{
-    description = "The resource group name"
-    type = string
-    validation {
-      condition     = trimspace(var.resource_group_name) != ""
-      error_message = "resource_group_name must not be empty."
-    }
+variable "resource_group_name" {
+  description = "The resource group name"
+  type        = string
+  validation {
+    condition     = trimspace(var.resource_group_name) != ""
+    error_message = "resource_group_name must not be empty."
+  }
 }
 
 variable "location" {

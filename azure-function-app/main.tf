@@ -56,10 +56,11 @@ resource "azurerm_function_app_flex_consumption" "flex_app" {
     dynamic "ip_restriction" {
       for_each = var.ip_restrictions
       content {
-        name       = ip_restriction.value.name
-        action     = ip_restriction.value.action
-        ip_address = ip_restriction.value.ip_address
-        priority   = ip_restriction.value.priority
+        name                      = ip_restriction.value.name
+        action                    = ip_restriction.value.action
+        ip_address                = try(ip_restriction.value.ip_address, null)
+        priority                  = ip_restriction.value.priority
+        virtual_network_subnet_id = try(ip_restriction.value.virtual_network_subnet_id, null)
       }
     }
   }

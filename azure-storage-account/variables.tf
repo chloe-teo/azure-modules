@@ -61,7 +61,7 @@ variable "containers" {
 variable "public_network_access_enabled" {
   description = "Whether public network access is enabled for the storage account"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "network_rules" {

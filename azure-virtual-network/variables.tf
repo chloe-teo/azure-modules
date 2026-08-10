@@ -20,9 +20,10 @@ variable "azure_virtual_network_address_space" {
 variable "subnets" {
   description = "Map of subnets"
   type = map(object({
-    name             = string
-    address_prefixes = list(string)
-    delegation_name  = optional(string)
+    name              = string
+    address_prefixes  = list(string)
+    delegation_name   = optional(string)
+    service_endpoints = optional(list(string), [])
   }))
   validation {
     condition     = length(var.subnets) > 0 && alltrue([for subnet in values(var.subnets) : trimspace(subnet.name) != "" && length(subnet.address_prefixes) > 0])

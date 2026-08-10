@@ -23,6 +23,7 @@ resource "azurerm_subnet" "this" {
   resource_group_name  = module.resource_group.name
   virtual_network_name = azurerm_virtual_network.this.name
   address_prefixes     = each.value.address_prefixes
+  service_endpoints    = each.value.service_endpoints
 
   dynamic "delegation" {
     for_each = each.value.delegation_name == null ? [] : [each.value.delegation_name]

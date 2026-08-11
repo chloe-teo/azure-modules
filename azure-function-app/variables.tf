@@ -148,6 +148,12 @@ variable "public_network_access_enabled" {
   default     = true
 }
 
+variable "https_only" {
+  description = "Should the Azure Function App require HTTPS-only access"
+  type        = bool
+  default     = true
+}
+
 variable "virtual_network_subnet_id" {
   description = "The delegated subnet ID used for Function App VNet integration"
   type        = string

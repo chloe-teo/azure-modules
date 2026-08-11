@@ -26,12 +26,13 @@ resource "azurerm_subnet" "this" {
   service_endpoints    = each.value.service_endpoints
 
   dynamic "delegation" {
-    for_each = each.value.delegation_name == null ? [] : [each.value.delegation_name]
+    for_each = each.value.delegation == null ? [] : [each.value.delegation]
     content {
       name = "${each.value.name}-delegation"
 
       service_delegation {
-        name = delegation.value
+        name    = delegation.value.name
+        actions = delegation.value.actions
       }
     }
   }

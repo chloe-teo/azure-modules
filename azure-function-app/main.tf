@@ -48,13 +48,14 @@ resource "azurerm_function_app_flex_consumption" "flex_app" {
   maximum_instance_count        = var.maximum_instance_count
   instance_memory_in_mb         = var.instance_memory_in_mb
   public_network_access_enabled = var.public_network_access_enabled
+  https_only                    = var.https_only
   virtual_network_subnet_id     = var.virtual_network_subnet_id
 
   site_config {
-    application_insights_key = var.application_insights_key
+    application_insights_key               = var.application_insights_key
     application_insights_connection_string = var.application_insights_connection_string
-    ip_restriction_default_action = var.ip_restriction_default_action
-    scm_ip_restriction_default_action = var.scm_ip_restriction_default_action
+    ip_restriction_default_action          = var.ip_restriction_default_action
+    scm_ip_restriction_default_action      = var.scm_ip_restriction_default_action
 
     dynamic "ip_restriction" {
       for_each = var.ip_restrictions

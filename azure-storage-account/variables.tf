@@ -58,6 +58,32 @@ variable "containers" {
   default = {}
 }
 
+variable "queues" {
+  description = "A map of storage queues to create."
+  type = map(object({
+    name = string
+  }))
+  default = {}
+}
+
+variable "tables" {
+  description = "A map of storage tables to create."
+  type = map(object({
+    name = string
+  }))
+  default = {}
+}
+
+variable "shares" {
+  description = "A map of Azure File shares to create."
+  type = map(object({
+    name       = string
+    quota      = optional(number, 1)
+    access_tier = optional(string, "TransactionOptimized")
+  }))
+  default = {}
+}
+
 variable "public_network_access_enabled" {
   description = "Whether public network access is enabled for the storage account"
   type        = bool
@@ -76,6 +102,26 @@ variable "network_rules" {
   validation {
     condition     = var.network_rules == null || contains(["Allow", "Deny"], var.network_rules.default_action)
     error_message = "network_rules.default_action must be Allow or Deny."
+  }
+}
+
+variable "private_endpoint_subnet_id" {
+  description = "The subnet ID used for the storage private endpoint. Leave null to disable private endpoints."
+  type        = string
+  default     = null
+}
+
+variable "private_endpoints" {
+  description = "Map of storage private endpoints to create. This expects shared DNS zone IDs already owned by the network team."
+  type = map(object({
+    name                 = string
+    subresource_name     = string
+    private_dns_zone_ids = optional(list(string), [])
+  }))
+  default = {}
+  validation {
+    condition     = length(var.private_endpoints) == 0 || var.private_endpoint_subnet_id != null
+    error_message = "private_endpoint_subnet_id must be set when private_endpoints is non-empty."
   }
 }
 

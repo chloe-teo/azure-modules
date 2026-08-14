@@ -23,15 +23,29 @@ module "service_plan" {
 module "storage_account" {
   source = "../azure-storage-account"
 
-  resource_group_name      = var.resource_group_name
-  location                 = var.location
-  storage_account_name     = var.storage_account_name
-  account_kind             = var.storage_account_kind
-  account_tier             = var.storage_account_tier
-  account_replication_type = var.storage_account_replication_type
-  access_tier              = var.storage_account_access_tier
-  containers               = var.containers
-  tags                     = var.tags
+  resource_group_name           = var.resource_group_name
+  location                      = var.location
+  storage_account_name          = var.storage_account_name
+  account_kind                  = var.storage_account_kind
+  account_tier                  = var.storage_account_tier
+  account_replication_type      = var.storage_account_replication_type
+  access_tier                   = var.storage_account_access_tier
+  containers                    = var.containers
+  public_network_access_enabled = var.storage_private_endpoint_subnet_id == null ? var.public_network_access_enabled : false
+  private_endpoint_subnet_id    = var.storage_private_endpoint_subnet_id
+  private_endpoints = var.storage_private_endpoint_subnet_id == null ? {} : {
+    blob = {
+      name                 = "pe-${var.storage_account_name}-blob"
+      subresource_name     = "blob"
+      private_dns_zone_ids = var.storage_blob_private_dns_zone_ids
+    }
+    # queue = {
+    #   name                 = "pe-${var.storage_account_name}-queue"
+    #   subresource_name     = "queue"
+    #   private_dns_zone_ids = var.storage_queue_private_dns_zone_ids
+    # }
+  }
+  tags = var.tags
 }
 
 resource "azurerm_function_app_flex_consumption" "flex_app" {

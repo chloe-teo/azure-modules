@@ -1,3 +1,20 @@
+locals {
+  private_endpoints = {
+    for key, endpoint in var.private_endpoints : key => {
+      name                           = endpoint.name
+      private_connection_resource_id = azurerm_storage_account.this.id
+      subresource_name               = endpoint.subresource_name
+      private_dns_zone_ids           = endpoint.private_dns_zone_ids
+    }
+    if (
+      (endpoint.subresource_name == "blob" && length(var.containers) > 0) ||
+      (endpoint.subresource_name == "queue" && length(var.queues) > 0) ||
+      (endpoint.subresource_name == "table" && length(var.tables) > 0) ||
+      (endpoint.subresource_name == "file" && length(var.shares) > 0)
+    )
+  }
+}
+
 module "resource_group" {
   source = "../azure-resource-group"
 
@@ -13,7 +30,7 @@ resource "azurerm_storage_account" "this" {
   account_tier                  = var.account_tier
   access_tier                   = var.access_tier
   account_replication_type      = var.account_replication_type
-  public_network_access_enabled = var.public_network_access_enabled
+  public_network_access_enabled = length(var.private_endpoints) == 0 ? var.public_network_access_enabled : false
   tags                          = var.tags
 
   dynamic "network_rules" {
@@ -33,4 +50,38 @@ resource "azurerm_storage_container" "this" {
   name                  = each.value.name
   storage_account_id    = azurerm_storage_account.this.id
   container_access_type = each.value.access_type
+}
+
+resource "azurerm_storage_queue" "this" {
+  for_each = var.queues
+
+  name               = each.value.name
+  storage_account_id = azurerm_storage_account.this.id
+}
+
+resource "azurerm_storage_table" "this" {
+  for_each = var.tables
+
+  name               = each.value.name
+  storage_account_id = azurerm_storage_account.this.id
+}
+
+resource "azurerm_storage_share" "this" {
+  for_each = var.shares
+
+  name               = each.value.name
+  storage_account_id = azurerm_storage_account.this.id
+  quota              = each.value.quota
+  access_tier        = each.value.access_tier
+}
+
+module "private_endpoint" {
+  source = "../azure-private-endpoint"
+
+  resource_group_name = module.resource_group.name
+  location            = module.resource_group.location
+  subnet_id           = var.private_endpoint_subnet_id
+  tags                = var.tags
+
+  private_endpoints   = local.private_endpoints
 }

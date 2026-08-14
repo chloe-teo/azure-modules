@@ -22,3 +22,23 @@ output "storage_containers" {
     }
   }
 }
+
+output "storage_shares" {
+  description = "Map of created Azure file shares"
+  value = {
+    for key, share in azurerm_storage_share.this : key => {
+      name = share.name
+      id   = share.id
+    }
+  }
+}
+
+output "private_endpoint_ids" {
+  description = "IDs of the created storage private endpoints keyed by endpoint type."
+  value       = module.private_endpoint.private_endpoint_ids
+}
+
+output "private_endpoint_names" {
+  description = "Names of the created storage private endpoints keyed by endpoint type."
+  value       = module.private_endpoint.private_endpoint_names
+}

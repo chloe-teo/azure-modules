@@ -166,11 +166,17 @@ variable "storage_private_endpoint_subnet_id" {
   default     = null
 }
 
-variable "storage_private_dns_zone_ids" {
-  description = "Private DNS zone IDs associated with the storage private endpoint"
+variable "storage_blob_private_dns_zone_ids" {
+  description = "Private DNS zone IDs associated with the storage blob private endpoint."
   type        = list(string)
   default     = []
 }
+
+# variable "storage_queue_private_dns_zone_ids" {
+#   description = "Private DNS zone IDs associated with the storage queue private endpoint."
+#   type        = list(string)
+#   default     = []
+# }
 
 variable "ip_restrictions" {
   description = "A list of IP restriction rules for the Azure Function App"

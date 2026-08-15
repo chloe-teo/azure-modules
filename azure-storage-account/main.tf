@@ -1,12 +1,11 @@
 locals {
   private_endpoints = {
     for key, endpoint in var.private_endpoints : key => {
-      name                           = endpoint.name
-      private_connection_resource_id = azurerm_storage_account.this.id
-      subresource_name               = endpoint.subresource_name
-      private_dns_zone_ids           = endpoint.private_dns_zone_ids
+      name                 = endpoint.name
+      subresource_name     = endpoint.subresource_name
+      private_dns_zone_ids = endpoint.private_dns_zone_ids
     }
-    if (
+    if(
       (endpoint.subresource_name == "blob" && length(var.containers) > 0) ||
       (endpoint.subresource_name == "queue" && length(var.queues) > 0) ||
       (endpoint.subresource_name == "table" && length(var.tables) > 0) ||
@@ -78,12 +77,11 @@ resource "azurerm_storage_share" "this" {
 module "private_endpoint" {
   source = "../azure-private-endpoint"
 
-  resource_group_name = module.resource_group.name
-  location            = module.resource_group.location
-  subnet_id           = var.private_endpoint_subnet_id
-  tags                = var.tags
+  resource_group_name            = module.resource_group.name
+  location                       = module.resource_group.location
+  subnet_id                      = var.private_endpoint_subnet_id
+  private_connection_resource_id = azurerm_storage_account.this.id
+  tags                           = var.tags
 
-  private_endpoints   = local.private_endpoints
-  
-  depends_on          = [azurerm_storage_account.this]
+  private_endpoints = local.private_endpoints
 }

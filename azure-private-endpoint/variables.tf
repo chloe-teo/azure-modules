@@ -19,13 +19,17 @@ variable "tags" {
   default     = {}
 }
 
+variable "private_connection_resource_id" {
+  description = "The resource ID to connect to through this private endpoint."
+  type        = string
+}
+
 variable "private_endpoints" {
   description = "Map of private endpoints to create keyed by endpoint type, such as blob or queue."
   type = map(object({
-    name                           = string
-    private_connection_resource_id = string
-    subresource_name               = string
-    private_dns_zone_ids           = optional(list(string), [])
+    name                 = string
+    subresource_name     = string
+    private_dns_zone_ids = optional(list(string), [])
   }))
   default = {}
 }

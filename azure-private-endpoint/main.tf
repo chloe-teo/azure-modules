@@ -9,7 +9,7 @@ resource "azurerm_private_endpoint" "this" {
 
   private_service_connection {
     name                           = "psc-${each.key}"
-    private_connection_resource_id = each.value.private_connection_resource_id
+    private_connection_resource_id = var.private_connection_resource_id
     is_manual_connection           = false
     subresource_names              = [each.value.subresource_name]
   }

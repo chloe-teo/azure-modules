@@ -33,17 +33,12 @@ module "storage_account" {
   containers                    = var.containers
   public_network_access_enabled = var.storage_private_endpoint_subnet_id == null ? var.public_network_access_enabled : false
   private_endpoint_subnet_id    = var.storage_private_endpoint_subnet_id
-  private_endpoints = var.storage_private_endpoint_subnet_id == null ? {} : {
+  private_endpoints = {
     blob = {
       name                 = "pe-${var.storage_account_name}-blob"
       subresource_name     = "blob"
       private_dns_zone_ids = var.storage_blob_private_dns_zone_ids
     }
-    # queue = {
-    #   name                 = "pe-${var.storage_account_name}-queue"
-    #   subresource_name     = "queue"
-    #   private_dns_zone_ids = var.storage_queue_private_dns_zone_ids
-    # }
   }
   tags = var.tags
 }

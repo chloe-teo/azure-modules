@@ -93,3 +93,20 @@ resource "azurerm_function_app_flex_consumption" "flex_app" {
     module.storage_account
   ]
 }
+
+module "private_endpoint" {
+  source = "../azure-private-endpoint"
+
+  resource_group_name            = module.resource_group.name
+  location                       = module.resource_group.location
+  subnet_id                      = var.private_endpoint_subnet_id
+  private_connection_resource_id = azurerm_function_app_flex_consumption.flex_app.id
+  private_endpoints = var.private_endpoint_subnet_id == null ? {} : {
+    sites = {
+      name                 = "pe-${var.azure_function_app_name}-sites"
+      subresource_name     = "sites"
+      private_dns_zone_ids = var.private_dns_zone_ids
+    }
+  }
+  tags = var.tags
+}

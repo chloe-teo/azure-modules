@@ -172,6 +172,18 @@ variable "storage_blob_private_dns_zone_ids" {
   default     = []
 }
 
+variable "private_endpoint_subnet_id" {
+  description = "The subnet ID for the Function App private endpoint."
+  type        = string
+  default     = null
+}
+
+variable "private_dns_zone_ids" {
+  description = "Private DNS zone IDs associated with the Function App private endpoint."
+  type        = list(string)
+  default     = []
+}
+
 # variable "storage_queue_private_dns_zone_ids" {
 #   description = "Private DNS zone IDs associated with the storage queue private endpoint."
 #   type        = list(string)

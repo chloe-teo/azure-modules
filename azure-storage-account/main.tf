@@ -29,7 +29,7 @@ resource "azurerm_storage_account" "this" {
   account_tier                  = var.account_tier
   access_tier                   = var.access_tier
   account_replication_type      = var.account_replication_type
-  public_network_access_enabled = length(var.private_endpoints) == 0 ? var.public_network_access_enabled : false
+  public_network_access_enabled = var.public_network_access_enabled
   tags                          = var.tags
 
   dynamic "network_rules" {

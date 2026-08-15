@@ -84,4 +84,6 @@ module "private_endpoint" {
   tags                = var.tags
 
   private_endpoints   = local.private_endpoints
+  
+  depends_on          = [azurerm_storage_account.this]
 }

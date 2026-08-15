@@ -14,6 +14,10 @@ Reusable Terraform modules for provisioning Azure infrastructure components.
 | `azure-function-app` | Serverless function deployments |
 | `azure-storage-account` | Blob storage, Terraform state backend |
 | `azure-application-insight` | Application monitoring & logging |
+| `azure-key-vault` | Azure Key Vault for secrets and keys |
+| `azure-private-dns-zone` | Private DNS zone management |
+| `azure-private-endpoint` | Private endpoint connectivity |
+| `azure-role-assignment` | Azure RBAC role assignments |
 
 ## Module Structure
 
